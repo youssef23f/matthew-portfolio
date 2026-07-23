@@ -3,8 +3,10 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhyMe from './components/WhyMe';
 import Projects from './components/Projects';
+import Certificates from './components/Certificates';
 import About from './components/About';
 import Contact from './components/Contact';
+import Chatbot from './components/Chatbot';
 
 export default function App() {
   return (
@@ -13,8 +15,10 @@ export default function App() {
       <Hero />
       <WhyMe />
       <Projects />
+      <Certificates />
       <About />
       <Contact />
+      <Chatbot />
     </div>
   );
 }
