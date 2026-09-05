@@ -1,14 +1,24 @@
 import { useState } from 'react';
-import { Menu, X, Code2 } from 'lucide-react';
+import { Menu, X, Code2, Globe } from 'lucide-react';
 
-export default function Navbar() {
+export default function Navbar({ lang = 'ar', setLang = () => {} }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  // نصوص الروابط بناءً على اللغة المختارة
+  const navTexts = {
+    ar: { about: 'عني', whyMe: 'لماذا أنا؟', education: 'التعليم', projects: 'أعمالي', contact: 'تواصل معي', hire: 'توظيف / تواصل' },
+    en: { about: 'About', whyMe: 'Why Me', education: 'Education', projects: 'Projects', contact: 'Contact', hire: 'Hire Me' },
+    de: { about: 'Über mich', whyMe: 'Warum ich', education: 'Ausbildung', projects: 'Projekte', contact: 'Kontakt', hire: 'Kontaktieren' }
+  };
+
+  const t = navTexts[lang] || navTexts.ar;
+
   const navLinks = [
-    { name: 'عني', href: '#about' },
-    { name: 'لماذا أنا؟', href: '#whyme' },
-    { name: 'أعمالي', href: '#projects' },
-    { name: 'تواصل معي', href: '#contact' },
+    { name: t.about, href: '#about' },
+    { name: t.whyMe, href: '#whyme' },
+    { name: t.education, href: '#education' },
+    { name: t.projects, href: '#projects' },
+    { name: t.contact, href: '#contact' },
   ];
 
   return (
@@ -24,7 +34,7 @@ export default function Navbar() {
         </a>
 
         {/* روابط الكمبيوتر */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link, idx) => (
             <a
               key={idx}
@@ -34,21 +44,54 @@ export default function Navbar() {
               {link.name}
             </a>
           ))}
+
+          {/* أزرار تبديل اللغة */}
+          <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-full p-1">
+            <Globe size={14} className="text-emerald-400 ml-1 hidden lg:block" />
+            <button 
+              onClick={() => setLang('ar')} 
+              className={`px-2.5 py-1 text-xs rounded-full font-medium transition-all ${lang === 'ar' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-white'}`}
+            >
+              AR
+            </button>
+            <button 
+              onClick={() => setLang('en')} 
+              className={`px-2.5 py-1 text-xs rounded-full font-medium transition-all ${lang === 'en' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-white'}`}
+            >
+              EN
+            </button>
+            <button 
+              onClick={() => setLang('de')} 
+              className={`px-2.5 py-1 text-xs rounded-full font-medium transition-all ${lang === 'de' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-white'}`}
+            >
+              DE
+            </button>
+          </div>
+
           <a
             href="#contact"
             className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-sm font-semibold transition-all shadow-lg shadow-emerald-500/10"
           >
-            توظيف / تواصل
+            {t.hire}
           </a>
         </div>
 
-        {/* زرار الموبايل */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* أزرار الموبايل (اللغة + قائمة الموبايل) */}
+        <div className="flex items-center gap-2 md:hidden">
+          {/* تبديل اللغة للموبايل */}
+          <div className="flex items-center bg-slate-900 border border-slate-800 rounded-full p-1">
+            <button onClick={() => setLang('ar')} className={`px-2 py-1 text-xs rounded-full ${lang === 'ar' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'}`}>AR</button>
+            <button onClick={() => setLang('en')} className={`px-2 py-1 text-xs rounded-full ${lang === 'en' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'}`}>EN</button>
+            <button onClick={() => setLang('de')} className={`px-2 py-1 text-xs rounded-full ${lang === 'de' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400'}`}>DE</button>
+          </div>
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* قائمة الموبايل */}
