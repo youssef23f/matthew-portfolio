@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhyMe from './components/WhyMe';
 import Projects from './components/Projects';
+import Education from './components/Education';
 import Certificates from './components/Certificates';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -15,6 +16,7 @@ export default function App() {
       <Hero />
       <WhyMe />
       <Projects />
+      <Education />
       <Certificates />
       <About />
       <Contact />
